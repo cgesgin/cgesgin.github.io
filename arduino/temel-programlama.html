@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temel Programlama - ~/root Lab</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        /* Kod blokları için özel kaydırma çubuğu */
+        pre::-webkit-scrollbar { height: 4px; }
+        pre::-webkit-scrollbar-thumb { background: #34d399; border-radius: 2px; }
+    </style>
+</head>
+
+<body class="bg-[#0B0F19] text-gray-300 font-mono flex h-screen overflow-hidden">
+
+    <!-- SOL SIDEBAR (SABİT DİZİN MENÜSÜ) -->
+    <aside class="w-72 bg-[#0F1422] border-r border-gray-850 flex flex-col justify-between hidden lg:flex shrink-0">
+        <div class="p-6 overflow-y-auto h-full space-y-6">
+            <!-- Üst Geri Dönüş Linki -->
+            <a href="../index.html" class="text-xs text-gray-500 hover:text-emerald-400 transition block"><- [ana_sayfa]</a>
+            
+            <!-- DERS ADI VE SABİT BAŞLIK -->
+            <div class="border-b border-gray-850 pb-4">
+                <div class="text-[10px] text-emerald-500/60 font-mono tracking-widest uppercase mb-1">// DERS ADI</div>
+                <h2 class="text-base font-bold text-white tracking-wide font-sans">Temel Programlama</h2>
+                <div class="text-[10px] text-gray-500 font-mono mt-1">Dizin: root/arduino/core.*</div>
+            </div>
+            
+            <!-- MODÜL GEZİNTİ LİSTESİ -->
+            <nav class="space-y-1 text-xs">
+                <!-- Modül 00: Aktif Seçili Tab Görünümü -->
+                <a href="#modul-00" class="block px-3 py-2.5 rounded-lg text-emerald-400 bg-[#141B2D] border-l-2 border-emerald-500 font-semibold shadow-sm shadow-emerald-500/5 transition">
+                    <span class="text-emerald-500 mr-1">>_</span> Modül 00: Core Mimari
+                </a>
+                <a href="#modul-01" class="block px-3 py-2.5 rounded-lg text-gray-400 hover:bg-emerald-500/5 hover:text-emerald-400 transition">
+                    ├─ Modül 01: Seri İletişim
+                </a>
+                <a href="#modul-02" class="block px-3 py-2.5 rounded-lg text-gray-400 hover:bg-emerald-500/5 hover:text-emerald-400 transition">
+                    ├─ Modül 02: Değişkenler
+                </a>
+                <a href="#modul-03" class="block px-3 py-2.5 rounded-lg text-gray-400 hover:bg-emerald-500/5 hover:text-emerald-400 transition">
+                    ├─ Modül 03: Karar Yapıları
+                </a>
+                <a href="#modul-04" class="block px-3 py-2.5 rounded-lg text-gray-400 hover:bg-emerald-500/5 hover:text-emerald-400 transition">
+                    ├─ Modül 04: Döngüler
+                </a>
+                <a href="#modul-05" class="block px-3 py-2.5 rounded-lg text-gray-400 hover:bg-emerald-500/5 hover:text-emerald-400 transition">
+                    ├─ Modül 05: Diziler
+                </a>
+                <a href="#modul-06" class="block px-3 py-2.5 rounded-lg text-gray-400 hover:bg-emerald-500/5 hover:text-emerald-400 transition">
+                    └─ Modül 06: Fonksiyonlar
+                </a>
+            </nav>
+        </div>
+        
+        <div class="p-4 border-t border-gray-850 text-[10px] text-gray-600 bg-[#0B0F19]/30 font-mono text-center">
+            // Sistem akmalı.
+        </div>
+    </aside>
+
+    <!-- SAĞ TARAF (DERS İÇERİK ALANI) -->
+    <main class="flex-1 overflow-y-auto p-6 md:p-12 font-sans space-y-16">
+        
+        <header class="font-mono border-b border-gray-850 pb-6">
+            <div class="text-xs text-emerald-500 mb-1 font-semibold tracking-widest">// DÖKÜMANTASYON</div>
+            <h1 class="text-2xl md:text-4xl font-bold text-white mb-2">Arduino ile Temel Programlama</h1>
+            <p class="text-xs md:text-sm text-gray-400 font-sans max-w-2xl">Arduino mimarisinde kod geliştirirken kullanılan çekirdek fonksiyonlar, veri tipleri, lojik yapılar ve modüler programlama mantığı.</p>
+        </header>
+
+        <!-- ================= MODÜL 00 ================= -->
+        <section id="modul-00" class="space-y-6 scroll-mt-6">
+            <div class="font-mono border-b border-gray-800 pb-2">
+                <span class="text-xs text-emerald-500 font-bold">// MODÜL 00</span>
+                <h2 class="text-xl font-bold text-white">Çekirdek (Core) Fonksiyon Mimarisi</h2>
+            </div>
+            
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Bir bilgisayar programı çalıştırıldığında işletim sistemi işletim sırasını yönetir. Ancak Arduino gibi bir mikrodenetleyicide (mikrokontrolcü) bir işletim sistemi yoktur; kod doğrudan ham donanım üzerinde (bare-metal) çalışır. Bu nedenle işlemcinin hayata gözlerini açtığı andan itibaren ne yapacağını bilen iki ana bloğa ihtiyacı vardır:
+            </p>
+            
+            <ul class="list-none pl-4 space-y-4 text-sm text-gray-300">
+                <li>
+                    <strong class="text-emerald-400 font-mono block mb-1">1. void setup() — Yapılandırma Bloğu</strong>
+                    Arduino'ya ilk kez enerji verildiğinde, USB kablosu takıldığında ya da üzerindeki Reset butonuna basıldığında mikrodenetleyici bu bloğun içine girer. İçindeki kodları <strong>yukarıdan aşağıya doğru sadece bir kez</strong> çalıştırır. Amacı, sistemin ana işleyişine başlamadan önce donanımsal çevre birimlerini hazır hale getirmektir. Hangi pinlerin akım vereceği (giriş mi çıkış mı olacağı), sensörlerin ilk kalibrasyon değerleri ve bilgisayarla yapılacak haberleşme protokolleri burada kurulur. Eğer bu blok boş bırakılırsa donanım ne yapacağını şaşırabilir.
+                </li>
+                <li>
+                    <strong class="text-emerald-400 font-mono block mb-1">2. void loop() — Ana Döngü Bloğu</strong>
+                    `setup()` bloğundaki tüm satırlar başarıyla icra edilip bittikten hemen sonra, işlemci `loop()` bloğuna geçiş yapar. Bu blok, adından da anlaşılacağı üzere <strong>sonsuz bir döngüdür</strong>. Blok içindeki son satır çalıştırıldığında, işlemci otomatik olarak tekrar en üstteki satıra geri döner. Kartın enerjisi kesilene kadar bu işlem saniyede binlerce kez tekrarlanır. Sensörlerin anlık olarak okunması, sıcaklık sınırının kontrol edilmesi veya motorların tetiklenmesi gibi sürekli dinamik olan tüm işlemler bu blokta hayat bulur.
+                </li>
+            </ul>
+
+            <h3 class="text-sm font-bold text-white font-mono mt-4">// Giriş/Çıkış Komutlarının Derin Analizi</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Arduino'nun dış dünya ile iletişim kurmasını sağlayan en temel 3 fonksiyon şunlardır:
+            </p>
+            <ul class="space-y-3 text-sm text-gray-300 pl-4 list-none font-sans">
+                <li>
+                    <code class="text-emerald-400 font-mono bg-gray-900/80 px-1.5 py-0.5 rounded border border-gray-800 text-xs">pinMode(pin_numarasi, mod);</code>: 
+                    İşlemciye, belirtilen numaralı fiziksel bacağın elektriksel karakterini söyler. Eğer `mod` kısmına <code class="text-xs font-mono text-amber-400">OUTPUT</code> yazılırsa o pinden dışarıya akım verileceği (örn: LED yakmak, motor sürmek) belirtilir. Eğer <code class="text-xs font-mono text-amber-400">INPUT</code> yazılırsa dış dünyadan bir voltaj sinyali okunacağı (örn: butona basıldı mı, sensör veri gönderdi mi) beyan edilmiş olur.
+                </li>
+                <li>
+                    <code class="text-emerald-400 font-mono bg-gray-900/80 px-1.5 py-0.5 rounded border border-gray-800 text-xs">digitalWrite(pin_numarasi, deger);</code>: 
+                    Sadece ÇIKIŞ (`OUTPUT`) olarak ayarlanmış dijital pinlerde işe yarar. Eğer değer kısmına <code class="text-xs font-mono text-amber-400">HIGH</code> yazılırsa o pinden tam 5V (veya 3.3V) elektrik çıkışı verilir. <code class="text-xs font-mono text-amber-400">LOW</code> yazılırsa pinin elektriği tamamen kesilir ve 0V (GND) seviyesine çekilir. Dijital dünyada bunun karşılığı Lojik 1 ve Lojik 0'dır.
+                </li>
+                <li>
+                    <code class="text-emerald-400 font-mono bg-gray-900/80 px-1.5 py-0.5 rounded border border-gray-800 text-xs">delay(milisaniye);</code>: 
+                    İşlemcinin saat kristalini oyalayarak belirtilen süre boyunca <strong>hiçbir iş yapmadan durmasını</strong> sağlar. İçine yazılan değer milisaniye cinsindendir ($1 \text{ saniye} = 1000 \text{ milisaniye}$). Önemli Not: `delay` çalışırken Arduino tamamen "donar", gelen sensör verilerini veya buton basışlarını o an kaçırabilir.
+                </li>
+            </ul>
+
+            <div class="space-y-2">
+                <div class="text-xs text-gray-500 font-mono flex justify-between items-center bg-[#0F1422] px-4 py-2 rounded-t-lg border border-gray-800 border-b-0">
+                    <span>LAB_00_BLINK.ino (Detaylı Analizli)</span>
+                    <a href="https://www.tinkercad.com" target="_blank" class="text-emerald-400 hover:underline text-[11px]">[Tinkercad Devresi]</a>
+                </div>
+                <pre class="bg-[#070A13] text-gray-300 p-4 rounded-b-lg border border-gray-800 text-xs font-mono overflow-x-auto leading-relaxed">
+<span class="text-gray-500">// Arduino IDE derleyicisi kodları derlemeye buradan başlar.</span>
+void setup() {
+  <span class="text-gray-500">// Arduino üzerindeki dahili L ledinin bağlı olduğu 13. pini </span>
+  <span class="text-gray-500">// dışarıya enerji aktarabilecek şekilde ÇIKIŞ olarak yapılandırıyoruz.</span>
+  pinMode(LED_BUILTIN, OUTPUT); 
+}
+
+<span class="text-gray-500">// Setup bitti. Şimdi aşağıdaki loop bloğu sonsuza kadar dönecek:</span>
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH); <span class="text-gray-500">// 13. pine 5V elektrik ver. LED yanmaya başladı.</span>
+  delay(1000);                     <span class="text-gray-500">// İşlemciyi 1 saniye boyunca bu satırda kilitle, durum değişmesin.</span>
+  digitalWrite(LED_BUILTIN, LOW);  <span class="text-gray-500">// 13. pinin elektriğini kes (0V). LED söndü.</span>
+  delay(1000);                     <span class="text-gray-500">// Sönük vaziyette 1 saniye bekle. </span>
+  <span class="text-gray-500">// Süre bittiğinde otomatik olarak loop'un ilk satırına (Line 9) geri zıpla.</span>
+}</pre>
+            </div>
+
+            <div class="bg-[#0F1422]/50 border border-gray-850 rounded-xl p-5 space-y-3">
+                <div class="text-xs text-amber-500 font-mono tracking-wider">// MEYDAN OKUMA / LABORATUVAR GÖREVLERİ</div>
+                <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2">
+                    <li>Dahili LED'in 2 saniye açık kalıp, yarım saniye (500ms) kapalı kalacağı asimetrik bir ritim oluşturun.</li>
+                    <li>Mors alfabesindeki "S" harfi gibi (3 kez hızlıca peş peşe) yanıp sönen bir sinyal algoritması kurun.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ================= MODÜL 01 ================= -->
+        <section id="modul-01" class="space-y-6 scroll-mt-6 pt-10 border-t border-gray-850/30">
+            <div class="font-mono border-b border-gray-800 pb-2">
+                <span class="text-xs text-emerald-500 font-bold">// MODÜL 01</span>
+                <h2 class="text-xl font-bold text-white">Konsol Dünyasına Giriş & Seri İletişim</h2>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Arduino tek başına çalışırken arka planda ne düşündüğünü, sensörlerden hangi sayısal değerleri okuduğunu veya kodun neresinde takıldığını göremeyiz. Çünkü kartın üzerinde bir ekran yoktur. İşte bu noktada imdadımıza <strong>Seri Haberleşme (Universal Asynchronous Receiver-Transmitter - UART)</strong> protokolü yetişir. Arduino, USB kablosu üzerinden bilgisayardaki "Seri Port Ekranı" (Serial Monitor) ile konuşabilir.
+            </p>
+
+            <h3 class="text-sm font-bold text-white font-mono mt-4">// Seri Port Fonksiyonlarının Farkları</h3>
+            <ul class="space-y-3 text-sm text-gray-300 pl-4 list-none font-sans">
+                <li>
+                    <code class="text-emerald-400 font-mono bg-gray-900/80 px-1.5 py-0.5 rounded border border-gray-800 text-xs">Serial.begin(baudrate);</code>: 
+                    Haberleşme hattını açan anahtardır. İçine yazılan sayı (genellikle 9600), saniyede kaç bitlik veri aktarılacağını (Baud Rate) belirtir. Bilgisayardaki ekran ile Arduino'nun hızı birebir uyuşmak zorundadır, yoksa ekranda anlamsız uzaylı karakterleri () görürsünüz.
+                </li>
+                <li>
+                    <code class="text-emerald-400 font-mono bg-gray-900/80 px-1.5 py-0.5 rounded border border-gray-800 text-xs">Serial.print("metin");</code>: 
+                    Belirtilen metni veya değişkenin değerini seri monitöre yan yana yazdırır. İmleç yazının bittiği yerde sabit kalır.
+                </li>
+                <li>
+                    <code class="text-emerald-400 font-mono bg-gray-900/80 px-1.5 py-0.5 rounded border border-gray-800 text-xs">Serial.println("metin");</code>: 
+                    Yazdırma işlemini yaptıktan sonra otomatik olarak görünmez bir "Enter" tuşuna basarak <strong>imleci bir alt satırın başına indirir</strong>. Düzenli log kayıtları tutmak için kritiktir.
+                </li>
+            </ul>
+            
+            <div class="space-y-2">
+                <div class="text-xs text-gray-500 font-mono flex justify-between items-center bg-[#0F1422] px-4 py-2 rounded-t-lg border border-gray-800 border-b-0">
+                    <span>LAB_01_SERIAL.ino</span>
+                    <a href="https://www.tinkercad.com" target="_blank" class="text-emerald-400 hover:underline text-[11px]">[Tinkercad Devresi]</a>
+                </div>
+                <pre class="bg-[#070A13] text-gray-300 p-4 rounded-b-lg border border-gray-800 text-xs font-mono overflow-x-auto leading-relaxed">
+void setup() {
+  <span class="text-gray-500">// Haberleşme kanalı saniyede 9600 bit hızında açılıyor.</span>
+  Serial.begin(9600); 
+  
+  <span class="text-gray-500">// İlk açılış mesajları basılıyor. Sadece 1 kez görünecekler.</span>
+  Serial.println("--- SISTEM BASLATILDI ---");
+  Serial.print("Yazilim Yukleniyor... ");
+  delay(1000); <span class="text-gray-500">// Kullanıcı yazıyı okuyabilsin diye yapay gecikme</span>
+  Serial.println("[OK]"); <span class="text-gray-500">// print'ten ötürü bu yazı hemen yanına eklenecek</span>
+}
+
+void loop() {
+  <span class="text-gray-500">// Aşağıdaki metin her 3 saniyede bir alt alta ekrana akacak.</span>
+  Serial.println("Sistem hatti aktif, veri bekleniyor...");
+  delay(3000); 
+}</pre>
+            </div>
+
+            <div class="space-y-2">
+                <div class="text-[10px] text-gray-500 font-mono uppercase tracking-wider">// SERİ PORT MONİTÖR ÇIKTISI (GÖRSEL AKIŞ)</div>
+                <div class="bg-black text-emerald-400 p-4 rounded-lg font-mono text-xs border border-gray-900 leading-relaxed shadow-inner">
+                    --- SISTEM BASLATILDI ---<br>
+                    Yazilim Yukleniyor... [OK]<br>
+                    Sistem hatti aktif, veri bekleniyor...<br>
+                    Sistem hatti aktif, veri bekleniyor...
+                </div>
+            </div>
+
+            <div class="bg-[#0F1422]/50 border border-gray-850 rounded-xl p-5 space-y-3">
+                <div class="text-xs text-amber-500 font-mono tracking-wider">// MEYDAN OKUMA / LABORATUVAR GÖREVLERİ</div>
+                <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2">
+                    <li>`setup()` bloğu içerisinde ASCII karakterlerini kullanarak ekrana bir kare kutu veya `~/root` logosu çizin.</li>
+                    <li>Sonsuz döngü (`loop`) içerisinde her adımda ekrana "İşlem yapılıyor..." yazan ve her satırın başına nokta koyan bir akış tasarlayın.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ================= MODÜL 02 ================= -->
+        <section id="modul-02" class="space-y-6 scroll-mt-6 pt-10 border-t border-gray-850/30">
+            <div class="font-mono border-b border-gray-800 pb-2">
+                <span class="text-xs text-emerald-500 font-bold">// MODÜL 02</span>
+                <h2 class="text-xl font-bold text-white">Bellek Yönetimi & Değişkenler</h2>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Değişkenler, program akışında sensörlerden gelen verileri veya matematiksel hesaplama sonuçlarını geçici olarak sakladığımız RAM (SRAM) kutucuklarıdır. Klasik bir bilgisayarda gigabaytlarca RAM bulunurken, bir Arduino Uno'da sadece <strong>2 Kilobayt (2048 bayt)</strong> RAM bulunur. Bu yüzden değişken tiplerini doğru seçmek hayati önem taşır; yanlış seçim belleğin taşmasına (`stack overflow`) ve kartın kilitlenmesine neden olur.
+            </p>
+
+            <h3 class="text-sm font-bold text-white font-mono mt-4">// Veri Tiplerinin Teknik Anatomisi</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-gray-400 font-sans border-collapse border border-gray-800">
+                    <thead>
+                        <tr class="bg-[#0F1422] text-white border-b border-gray-800">
+                            <th class="p-3">Veri Tipi</th>
+                            <th class="p-3">Bellek Boyutu</th>
+                            <th class="p-3">Saklayabildiği Değer Aralığı</th>
+                            <th class="p-3">Kullanım Amacı</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-850">
+                        <tr>
+                            <td class="p-3 font-mono text-emerald-400 font-bold">boolean</td>
+                            <td class="p-3">1 Bayt (8-bit)</td>
+                            <td class="p-3">true (1) veya false (0)</td>
+                            <td class="p-3">Mantıksal anahtarlar, açık/kapalı durumları.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-emerald-400 font-bold">char</td>
+                            <td class="p-3">1 Bayt (8-bit)</td>
+                            <td class="p-3">-128 ile 127 (Tek bir ASCII karakteri)</td>
+                            <td class="p-3">'A', 'k', '9' gibi tek tırnak içinde yazılan karakterler.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-emerald-400 font-bold">int</td>
+                            <td class="p-3">2 Bayt (16-bit)</td>
+                            <td class="p-3">-32,768 ile 32,767</td>
+                            <td class="p-3">Standart tam sayılar, döngü sayaçları.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-emerald-400 font-bold">float</td>
+                            <td class="p-3">4 Bayt (32-bit)</td>
+                            <td class="p-3">-3.4028235E+38 ile 3.4028235E+38</td>
+                            <td class="p-3">Kesirli ve ondalıklı sayılar (Örn: Hassas sıcaklık verisi).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="space-y-2">
+                <div class="text-xs text-gray-500 font-mono flex justify-between items-center bg-[#0F1422] px-4 py-2 rounded-t-lg border border-gray-800 border-b-0">
+                    <span>LAB_02_VARIABLES.ino</span>
+                    <a href="https://www.tinkercad.com" target="_blank" class="text-emerald-400 hover:underline text-[11px]">[Tinkercad Devresi]</a>
+                </div>
+                <pre class="bg-[#070A13] text-gray-300 p-4 rounded-b-lg border border-gray-800 text-xs font-mono overflow-x-auto leading-relaxed">
+<span class="text-gray-500">// Değişken Tanımlama Formülü: Veri_Tipi degisken_adi = ilk_deger;</span>
+int tamsayiX = 45;              <span class="text-gray-500">// Hafızada 2 bayt yer kaplar</span>
+float ondalikY = 12.85;          <span class="text-gray-500">// Hafızada 4 bayt yer kaplar</span>
+char karakterA = 'K';            <span class="text-gray-500">// Karakterler TEK tırnak içinde yazılır</span>
+boolean sistemDurumu = true;     <span class="text-gray-500">// Sadece true veya false alabilir</span>
+
+void setup() {
+  Serial.begin(9600);
+  
+  <span class="text-gray-500">// Farklı veri tipleri matematiksel işleme girebilir ancak veri kaybına dikkat edilmelidir.</span>
+  <span class="text-gray-500">// int ile float toplanırsa sonuç doğruluğu korumak için float tipinde saklanmalıdır.</span>
+  float toplam = tamsayiX + ondalikY;
+  
+  Serial.print("Veri A: "); Serial.println(karakterA);
+  Serial.print("Matematiksel Toplam: "); Serial.println(toplam); <span class="text-gray-500">// Ekrana 57.85 yazar</span>
+  Serial.print("Sistem Durumu (Lojik): "); Serial.println(sistemDurumu); <span class="text-gray-500">// Ekrana true yerine '1' basar</span>
+}
+
+void loop() {}</pre>
+            </div>
+
+            <div class="bg-[#0F1422]/50 border border-gray-850 rounded-xl p-5 space-y-3">
+                <div class="text-xs text-amber-500 font-mono tracking-wider">// MEYDAN OKUMA / LABORATUVAR GÖREVLERİ</div>
+                <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2">
+                    <li>Kök dizinde iki adet `int` tipinde kenar uzunluğu tanımlayıp, dikdörtgenin alanını ve çevresini hesaplayarak Seri Monitör'e basan algoritmayı kurun.</li>
+                    <li>Bir havuz problemi simülasyonu yapın: Saatte 5.4 litre su akıtan bir musluğun 6 saat sonunda havuzda biriktirdiği toplam su miktarını ondalıklı (`float`) olarak ekrana yazdırın.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ================= MODÜL 03 ================= -->
+        <section id="modul-03" class="space-y-6 scroll-mt-6 pt-10 border-t border-gray-850/30">
+            <div class="font-mono border-b border-gray-800 pb-2">
+                <span class="text-xs text-emerald-500 font-bold">// MODÜL 03</span>
+                <h2 class="text-xl font-bold text-white">Karar Yapıları & Mantıksal Algoritmalar</h2>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Akıllı bir sistem, gelen verileri değerlendirip kendi kendine karar verebilen sistemdir. Program akışını dallandırmak için <code class="text-emerald-400 font-mono bg-gray-900/80 px-1 py-0.5 rounded text-xs">if (eğer)</code>, <code class="text-emerald-400 font-mono bg-gray-900/80 px-1 py-0.5 rounded text-xs">else if (değilse eğer)</code> ve <code class="text-emerald-400 font-mono bg-gray-900/80 px-1 py-0.5 rounded text-xs">else (hiçbiri değilse)</code> bloklarını kullanırız. İşlemci parantez içindeki ifadenin doğru (`true`) olup olmadığına bakar. Doğruysa o bloğun içine dalar, yanlışsa o bloğu pas geçer.
+            </p>
+
+            <h3 class="text-sm font-bold text-white font-mono mt-4">// Mantıksal Operatörler Kılavuzu</h3>
+            <ul class="space-y-2 text-sm text-gray-300 pl-4 list-none font-sans">
+                <li><code class="text-amber-400 font-mono bg-gray-900/80 px-1 py-0.5 rounded border border-gray-800 text-xs">&&</code> **(VE Operatörü):** Bağlanan tüm koşulların **hepsinin** doğru olması gerekir. Bir tane bile yanlış varsa sonuç `false` çıkar.</li>
+                <li><code class="text-amber-400 font-mono bg-gray-900/80 px-1 py-0.5 rounded border border-gray-800 text-xs">||</code> **(VEYA Operatörü):** Koşullardan sadece **bir tanesinin** doğru olması bloğun çalışması için yeterlidir.</li>
+                <li><code class="text-amber-400 font-mono bg-gray-900/80 px-1 py-0.5 rounded border border-gray-800 text-xs">!=</code> **(Eşit Değildir):** İki değerin birbiriyle eşleşmediği durumlarda `true` sonucunu üretir.</li>
+            </ul>
+
+            <div class="space-y-2">
+                <div class="text-xs text-gray-500 font-mono flex justify-between items-center bg-[#0F1422] px-4 py-2 rounded-t-lg border border-gray-800 border-b-0">
+                    <span>LAB_03_CONDITIONALS.ino</span>
+                    <a href="https://www.tinkercad.com" target="_blank" class="text-emerald-400 hover:underline text-[11px]">[Tinkercad Devresi]</a>
+                </div>
+                <pre class="bg-[#070A13] text-gray-300 p-4 rounded-b-lg border border-gray-800 text-xs font-mono overflow-x-auto leading-relaxed">
+int sensorSicaklik = 34; <span class="text-gray-500">// Sensörden bu değerin okunduğunu varsayalım</span>
+
+void setup() {
+  Serial.begin(9600);
+  
+  <span class="text-gray-500">// Koşul 1: Sıcaklık 40 dereceye eşit veya daha büyük mü?</span>
+  if(sensorSicaklik >= 40) {
+    Serial.println("ALARM: Kritik Yuksek Sicaklik!");
+  } 
+  <span class="text-gray-500">// Koşul 2: İlk koşul sağlanmadıysa buraya bak. Değer 20 ile 40 arasında mı?</span>
+  else if(sensorSicaklik >= 20 && sensorSicaklik < 40) {
+    Serial.println("DURUM: Sicaklik Degerleri Normal."); <span class="text-gray-500">// 34 bu aralığa uyar</span>
+  } 
+  <span class="text-gray-500">// Koşul 3: Yukarıdaki olasılıkların hiçbiri gerçekleşmediyse otomatik burası çalışır.</span>
+  else {
+    Serial.println("UYARI: Dusuk Sicaklik Gerilimi.");
+  }
+}
+
+void loop() {}</pre>
+            </div>
+
+            <div class="bg-[#0F1422]/50 border border-gray-850 rounded-xl p-5 space-y-3">
+                <div class="text-xs text-amber-500 font-mono tracking-wider">// MEYDAN OKUMA / LABORATUVAR GÖREVLERİ</div>
+                <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2">
+                    <li>Girilen bir `int vize` ve `int final_notu` değişkenlerinin ortalamasını alıp (Vize %40, Final %60), ortalama 50 altındaysa "Kaldı", üstündeyse "Geçti" basan sistemi yazın.</li>
+                    <li>Bir araç hız simülasyonu kurun: Hız 120'den büyükse "Ceza Puanı İşlendi", 90-120 arasındaysa "Yüksek Hız Sınırı", 90 altındaysa "Güvenli Sürüş" çıktıları üretilsin.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ================= MODÜL 04 ================= -->
+        <section id="modul-04" class="space-y-6 scroll-mt-6 pt-10 border-t border-gray-850/30">
+            <div class="font-mono border-b border-gray-800 pb-2">
+                <span class="text-xs text-emerald-500 font-bold">// MODÜL 04</span>
+                <h2 class="text-xl font-bold text-white">Döngüler (Loops)</h2>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Bazen bir işlemi tek bir kez değil, belirli bir sayıda veya bir şart gerçekleşene kadar ardı ardına yapmamız gerekir. Örneğin, bir uyarı buzzer'ını 5 kez peş peşe öttürmek veya bağlı olan 10 tane LED'i sırayla açmak gibi. Kod satırlarını kopyala-yapıştır yapmak yerine döngü mimarilerini kullanırız. En sık kullanılan döngü yapısı <code class="text-emerald-400 font-mono bg-gray-900/80 px-1 py-0.5 rounded text-xs">for</code> döngüsüdür.
+            </p>
+
+            <h3 class="text-sm font-bold text-white font-mono mt-4">// For Döngüsünün 3 Silahşörü</h3>
+            <p class="text-gray-400 text-sm font-sans leading-relaxed">
+                Bir `for` parantezi içerisine noktalı virgüllerle ayrılmış 3 parametre yazılır: <br>
+                <code class="text-xs font-mono text-emerald-400">for(başlangıç_değeri; döngü_şartı; değişim_miktarı)</code>
+            </p>
+            <ol class="list-decimal list-inside text-sm text-gray-300 space-y-2 pl-4">
+                <li><strong>Başlangıç:</strong> Döngüde sayacı tutacak olan değişkenin doğduğu yerdir (Örn: `int i = 1;`).</li>
+                <li><strong>Şart:</strong> Döngünün çalışmaya devam edip etmeyeceğini denetler (Örn: `i <= 5;`). Şart doğru olduğu sürece döngü döner.</li>
+                <li><strong>Değişim:</strong> Blok içindeki kodlar çalışıp bittikten sonra sayacın ne kadar artacağını veya azalacağını belirler (Örn: `i++` ifadesi sayacı 1 arttırır).</li>
+            </ol>
+
+            <div class="space-y-2">
+                <div class="text-xs text-gray-500 font-mono flex justify-between items-center bg-[#0F1422] px-4 py-2 rounded-t-lg border border-gray-800 border-b-0">
+                    <span>LAB_04_LOOPS.ino</span>
+                    <a href="https://www.tinkercad.com" target="_blank" class="text-emerald-400 hover:underline text-[11px]">[Tinkercad Devresi]</a>
+                </div>
+                <pre class="bg-[#070A13] text-gray-300 p-4 rounded-b-lg border border-gray-800 text-xs font-mono overflow-x-auto leading-relaxed">
+void setup() {
+  Serial.begin(9600);
+  
+  Serial.println("Siralama Dongusu Basliyor:");
+  
+  <span class="text-gray-500">// i değişkeni 1'den başlar, 5'e eşit veya küçük olduğu sürece döner, her turda i bir artar.</span>
+  for(int i = 1; i <= 5; i++) {
+    Serial.print("Dongu Tur Numarasi: ");
+    Serial.println(i);
+    delay(250); <span class="text-gray-500">// Her turun arasında çeyrek saniye bekle</span>
+  }
+  
+  Serial.println("Dongu bitti, siradaki kod satirlarina geciliyor.");
+}
+
+void loop() {}</pre>
+            </div>
+
+            <div class="bg-[#0F1422]/50 border border-gray-850 rounded-xl p-5 space-y-3">
+                <div class="text-xs text-amber-500 font-mono tracking-wider">// MEYDAN OKUMA / LABORATUVAR GÖREVLERİ</div>
+                <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2">
+                    <li>`for` veya `while` döngüsü kullanarak 1 ile 50 arasındaki yalnızca 3'e tam bölünebilen sayıları süzüp ekrana basan kodu yazın.</li>
+                    <li>Seri ekranda yıldız (`*`) karakterini kullanarak yan yana 10 adet yıldız basan, ardından bir alt satıra geçen döngü mekanizmasını tasarlayın.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ================= MODÜL 05 ================= -->
+        <section id="modul-05" class="space-y-6 scroll-mt-6 pt-10 border-t border-gray-850/30">
+            <div class="font-mono border-b border-gray-800 pb-2">
+                <span class="text-xs text-emerald-500 font-bold">// MODÜL 05</span>
+                <h2 class="text-xl font-bold text-white">Diziler (Arrays)</h2>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Aynı türdeki verileri (örneğin 10 farklı odanın sıcaklık bilgisini) saklamak için 10 ayrı değişken (`sicaklik1`, `sicaklik2`...) tanımlamak hamallıktır. Bunun yerine, ortak bir isim altında bir çekmece dolusu veri saklamamıza imkan veren yapılara <strong>Dizi (Array)</strong> denir. Yazılım dünyasında dizilerin ilk elemanı her zaman <strong>0. indekste</strong> yer alır.
+            </p>
+
+            <h3 class="text-sm font-bold text-white font-mono mt-4">// Kritik İndeks ve Sınır Kuralları</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Eğer bir diziyi 4 elemanlı tanımladıysanız (`int veri[4]`), bu dizinin geçerli odacıkları 0, 1, 2 ve 3'tür. Olmayan 4. indeksteki elemanı okumaya veya değiştirmeye çalışırsanız (`veri[4]`), Arduino RAM'deki başka rastgele bir verinin üzerine yazar. Buna "Sınır Taşması Hatası" denir ve projelerde çözülmesi en zor donanımsal sapmalara yol açar.
+            </p>
+
+            <div class="space-y-2">
+                <div class="text-xs text-gray-500 font-mono flex justify-between items-center bg-[#0F1422] px-4 py-2 rounded-t-lg border border-gray-800 border-b-0">
+                    <span>LAB_05_ARRAYS.ino</span>
+                    <a href="https://www.tinkercad.com" target="_blank" class="text-emerald-400 hover:underline text-[11px]">[Tinkercad Devresi]</a>
+                </div>
+                <pre class="bg-[#070A13] text-gray-300 p-4 rounded-b-lg border border-gray-800 text-xs font-mono overflow-x-auto leading-relaxed">
+<span class="text-gray-500">// 4 eleman kapasiteli tam sayı dizisi beyanı</span>
+<span class="text-gray-500">// Indeksler:        0.  1.  2.  3.</span>
+int analogNotlar[4] = {70, 85, 40, 95};
+
+void setup() {
+  Serial.begin(9600);
+  
+  <span class="text-gray-500">// Dizinin 3. elemanına (yani 2. indekse) ulaşalım:</span>
+  Serial.print("Dizinin 3. Elemani: ");
+  Serial.println(analogNotlar[2]); <span class="text-gray-500">// Ekrana 40 basar</span>
+  
+  <span class="text-gray-500">// Bir elemanın değerini güncelleme:</span>
+  analogNotlar[0] = 100; <span class="text-gray-500">// Artık 70 silindi, yerine 100 yazıldı.</span>
+}
+
+void loop() {}</pre>
+            </div>
+
+            <div class="bg-[#0F1422]/50 border border-gray-850 rounded-xl p-5 space-y-3">
+                <div class="text-xs text-amber-500 font-mono tracking-wider">// MEYDAN OKUMA / LABORATUVAR GÖREVLERİ</div>
+                <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2">
+                    <li>İçinde 5 adet tam sayı barındıran bir dizi oluşturun. Bir `for` döngüsü yardımıyla bu dizideki tüm sayıların aritmetik ortalamasını hesaplayıp ekrana yazdırın.</li>
+                    <li>Dizi elemanlarını tarayarak içlerindeki en büyük sayıyı (Maximum Value) bulup ekrana yazdıran arama algoritmasını kurgulayın.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ================= MODÜL 06 ================= -->
+        <section id="modul-06" class="space-y-6 scroll-mt-6 pt-10 border-t border-gray-850/30">
+            <div class="font-mono border-b border-gray-800 pb-2">
+                <span class="text-xs text-emerald-500 font-bold">// MODÜL 06</span>
+                <h2 class="text-xl font-bold text-white">Fonksiyonlar (Metotlar)</h2>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Yazılım mühendisliğinin en temel kuralı **DRY (Don't Repeat Yourself - Kendini Tekrar Etme)** ilkesidir. Kod yazarken aynı hesaplamayı veya işlem serisini defalarca kullanıyorsak, bunu bağımsız bir paket haline getirmeliyiz. İşte bu paketlere <strong>Fonksiyon</strong> denir. Fonksiyonlar bir işi yapmak için parametre (girdi) alabilir ve işlem sonucunu çağrıldıkları yere geri fırlatabilirler (çıktı).
+            </p>
+
+            <h3 class="text-sm font-bold text-white font-mono mt-4">// Void ve Geri Dönüş Tiplerinin Ayrımı</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Eğer bir fonksiyon yapacağı işin sonunda geriye matematiksel bir sayı veya lojik bir cevap döndürmeyecekse, sadece içine yazılan kod satırlarını çalıştırıp görevi bitirecekse başına <code class="text-emerald-400 font-mono bg-gray-900/80 px-1 py-0.5 rounded text-xs">void</code> kelimesi konur (Tıpkı `setup()` ve `loop()` gibi). Ancak hesaplama yapıp çağrıldığı yere bir değer verecekse, döndüreceği verinin tipi (`int`, `float`, `char`) yazılmak zorundadır ve fonksiyon içerisinde <code class="text-amber-400 font-mono bg-gray-900/80 px-1 py-0.5 rounded text-xs">return</code> anahtar kelimesiyle süreç sonlandırılır.
+            </p>
+
+            <div class="space-y-2">
+                <div class="text-xs text-gray-500 font-mono flex justify-between items-center bg-[#0F1422] px-4 py-2 rounded-t-lg border border-gray-800 border-b-0">
+                    <span>LAB_06_FUNCTIONS.ino</span>
+                    <a href="https://www.tinkercad.com" target="_blank" class="text-emerald-400 hover:underline text-[11px]">[Tinkercad Devresi]</a>
+                </div>
+                <pre class="bg-[#070A13] text-gray-300 p-4 rounded-b-lg border border-gray-800 text-xs font-mono overflow-x-auto leading-relaxed">
+<span class="text-gray-500">// Geri dönüş değeri 'int' (tam sayı) olan, dışarıdan iki parametre alan fonksiyon:</span>
+int alanHesapla(int taban, int yukseklik) {
+  int sonuc = (taban * yukseklik) / 2;
+  return sonuc; <span class="text-gray-500">// Hesaplanan değeri fonksiyonu çağıran satıra teslim et</span>
+}
+
+void setup() {
+  Serial.begin(9600);
+  
+  <span class="text-gray-500">// Fonksiyonun çağrılması: 10 ve 5 değerleri kurye gibi fonksiyona taşınır</span>
+  int ucgenAlani = alanHesapla(10, 5); 
+  
+  Serial.print("Hesaplanan Ucgen Alani: ");
+  Serial.println(ucgenAlani); <span class="text-gray-500">// Ekrana 25 basar</span>
+}
+
+void loop() {}</pre>
+            </div>
+
+            <div class="bg-[#0F1422]/50 border border-gray-850 rounded-xl p-5 space-y-3">
+                <div class="text-xs text-amber-500 font-mono tracking-wider">// MEYDAN OKUMA / LABORATUVAR GÖREVLERİ</div>
+                <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2">
+                    <li>Kendisine parametre olarak gönderilen bir sayının tek mi çift mi olduğunu analiz edip geriye `true` ya da `false` dönen mantıksal bir fonksiyon yazın.</li>
+                    <li>Seri ekrandan çağrıldığında ekrana sürekli olarak 30 adet kısa çizgi (`------------------------------`) çeken geri dönüşsüz (`void`) bir süsleme fonksiyonu oluşturun.</li>
+                </ol>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+
+</html>
