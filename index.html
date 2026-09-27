@@ -4,239 +4,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>~/root - Ders Notları & Laboratuvar Uygulamaları</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Dersler</title>
+
     <style>
-        details summary::-webkit-details-marker {
-            display: none;
+        * {
+            box-sizing: border-box;
         }
 
-        details summary {
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            background: #f5f6f8;
+            color: #222;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+        }
+
+        header {
+            background: white;
+            padding: 25px;
+            border: 1px solid #ddd;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 0;
+            color: #777;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        section {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 14px;
+            padding: 18px;
+            transition: 0.2s;
+        }
+
+        section:hover {
+            border-color: #aaa;
+            transform: translateY(-2px);
+        }
+
+        section h2 {
+            margin: 0 0 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 18px;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
             list-style: none;
         }
 
-
-        details {
-            max-height: 52px;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+        li {
+            margin-top: 8px;
         }
 
-        details[open] {
-            max-height: 1000px;
+        li:first-child {
+            margin-top: 0;
+        }
+
+        li a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 11px 13px;
+
+            border-radius: 9px;
+            background: #f7f8fa;
+
+            color: #2563eb;
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: 0.15s;
+        }
+
+        li a::after {
+            content: "→";
+            color: #999;
+            font-size: 16px;
+        }
+
+        li a:hover {
+            background: #eef2ff;
+            color: #1d4ed8;
+        }
+
+        li a:hover::after {
+            color: #2563eb;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #999;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            section {
+                padding: 15px;
+            }
         }
     </style>
+
 </head>
 
-<body
-    class="bg-[#0B0F19] text-gray-300 font-mono selection:bg-emerald-500 selection:text-black min-h-screen flex flex-col">
-
-    <div class="max-w-4xl w-full mx-auto px-6 py-8 flex-1">
-
-        <nav class="flex justify-between items-center border-b border-gray-800 pb-6 mb-16">
-            <div class="flex items-center space-x-2">
-                <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span class="text-white font-bold tracking-wider text-sm">~/root</span>
-            </div>
-            <div class="flex space-x-6 text-sm">
-                <a href="#" class="text-gray-450 hover:text-emerald-400 transition">.hakkımda()</a>
-                <a href="#" class="text-emerald-400 font-semibold">// Dersler</a>
-            </div>
-        </nav>
-
-        <header class="mb-20">
-            <div class="text-xs text-emerald-500 mb-2 font-semibold uppercase tracking-widest">"Geleceği tahmin
-                edemezsin, onu inşa edersin."</div>
-            <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">
-                Ders Notları & Kaynaklar
-            </h1>
-            <p class="text-gray-400 font-sans leading-relaxed max-w-2xl text-base">
-                Ders Notları , kaynaklar ve yol haritalarına aşağıdan ulaşabilirsiniz. Her dersin altında ilgili
-                projeler ve referans materyalleri bulunmaktadır.
-                </br></br>
-                İyi çalışmalar!
-            </p>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Dersler</h1>
+            <p>Derslerle ilgili kodları ödevleri ve duyuları aşağıdan ulaşabilirsiniz.</p>
         </header>
 
-        <main class="space-y-4">
-            <div class="mb-6">
-                <h2 class="text-lg font-bold text-white mb-2 flex items-center">
-                    <span class="text-emerald-500 mr-2">├─</span> Verilen Dersler & Notlar
-                </h2>
-                <p class="text-xs text-gray-500 font-sans pl-6">Konu başlıklarını ve modülleri görmek için derslerin
-                    üzerine tıklayın.</p>
-            </div>
-            <!--Web Tabanlı Uygulamalar -->
-            <details
-                class="group border border-gray-800 open:border-emerald-500/30 rounded-xl bg-[#0F1422] open:bg-[#141B2D] overflow-hidden">
-                <summary
-                    class="cursor-pointer px-5 py-4 flex items-center justify-between select-none hover:bg-[#141B2D] transition-colors duration-200">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-emerald-500 group-open:text-emerald-400 transition-colors">//</span>
-                        <span
-                            class="text-white font-bold text-sm md:text-base tracking-wide group-open:text-emerald-400 transition-colors">Web
-                            Tabanlı Uygulamalar</span>
-                    </div>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 text-gray-400 group-open:rotate-90 group-open:text-emerald-400 transition-all duration-300 transform"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                    </svg>
-                </summary>
-                <div class="px-6 pb-5 pt-2 border-t border-gray-850/50 space-y-2 font-sans text-sm bg-[#0B0F19]/40">
-
-                    <div class="flex items-center space-x-2 pt-1">
-                        <span class="text-emerald-500 font-mono">├─</span>
-                        <span class="text-gray-300 font-medium">Projeler</span>
-                    </div>
-
-                    <div class="flex items-center space-x-2 pl-4">
-                        <span class="text-gray-600 font-mono text-xs">│ ├──</span>
-                        <a class="text-gray-450 hover:text-emerald-400 transition text-xs">Proje 1: Todo App (Crud App)
-                            - beginner</a>
-                    </div>
-
-                    <div class="flex items-center space-x-2 pl-4">
-                        <span class="text-gray-600 font-mono text-xs">│ ├──</span>
-                        <a class="text-gray-450 hover:text-emerald-400 transition text-xs">Proje 2: Blog App (Identity
-                            Security App) - intermediate</a>
-                    </div>
-
-                    <div class="flex items-center space-x-2 pl-4">
-                        <span class="text-gray-600 font-mono text-xs">│ └──</span>
-                        <a class="text-gray-450 hover:text-emerald-400 transition text-xs">Proje 3: Funny Game App
-                            (E-Commerce App) - intermediate</a>
-                    </div>
-
-                </div>
-            </details>
-
-            <!--Robotik Programlama -->
-            <details class="group border border-gray-850 rounded-xl bg-[#0F1422] overflow-hidden">
-                <summary
-                    class="cursor-pointer px-5 py-4 flex items-center justify-between select-none hover:bg-[#141B2D] transition-colors duration-200">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-emerald-500 group-open:text-emerald-400 transition-colors">//</span>
-                        <span
-                            class="text-white font-bold text-sm md:text-base tracking-wide group-open:text-emerald-400 transition-colors">Arduino
-                            ile Robotik Programlama</span>
-                    </div>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 text-gray-400 group-open:rotate-90 transition-all duration-300 transform"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                    </svg>
-
-                </summary>
-                <div class="px-6 pb-5 pt-2 border-t border-gray-850/50 space-y-2 font-sans text-sm bg-[#0B0F19]/40">
-
-                    <div class="flex items-center space-x-2 py-1">
-                        <span class="text-emerald-500 font-mono">├─</span>
-                        <a href="arduino/temel-programlama.html"
-                            class="text-gray-350 hover:text-emerald-400 font-medium transition flex items-center">
-                            Temel Programlama
+        <main>
+            <!-- C++/UI Uygulama Geliştirme -->
+            <section>
+                <h2>💻 C++/UI Uygulama Geliştirme</h2>
+                <ul>
+                    <li>
+                        <a href="https://github.com/cgesgin/cpp-ui-development">
+                            📁 Projeler
                         </a>
-                    </div>
-
-                    <div class="flex items-center space-x-2 py-1 pointer-events-none opacity-40">
-                        <span class="text-gray-600 font-mono">├─</span>
-                        <span class="text-gray-400">Temel Elektronik Bilgisi</span>
-                         <span
-                            class="ml-2 text-[10px] bg-gray-900 text-gray-500 px-1.5 py-0.5 rounded border border-gray-800 font-mono">yakında</span>
-                    
-                    </div>
-
-                    <div class="flex items-center space-x-2 pt-1 pointer-events-none opacity-40">
-                        <span class="text-gray-600 font-mono">├─</span>
-                        <span class="text-gray-400 font-medium">Projeler</span>
-                         <span
-                            class="ml-2 text-[10px] bg-gray-900 text-gray-500 px-1.5 py-0.5 rounded border border-gray-800 font-mono">yakında</span>
-                    
-                    </div>
-                </div>
-
-            </details>
-
-            <!--Nesne Tabanlı Programlama -->
-            <details class="group border border-gray-850 rounded-xl bg-[#0F1422] overflow-hidden">
-                <summary
-                    class="cursor-pointer px-5 py-4 flex items-center justify-between select-none hover:bg-[#141B2D] transition-colors duration-200">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-gray-600">//</span>
-                        <span class="text-gray-400 font-bold text-sm md:text-base tracking-wide">Nesne Tabanlı
-                            Programlama</span>
-                        <span
-                            class="ml-2 text-[10px] bg-gray-900 text-gray-500 px-1.5 py-0.5 rounded border border-gray-800 font-mono">yakında</span>
-                    </div>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 text-gray-400 group-open:rotate-90 transition-all duration-300 transform"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                    </svg>
-
-                </summary>
-                <div class="px-6 pb-5 pt-2 border-t border-gray-850/50 space-y-2 font-sans text-sm bg-[#0B0F19]/40">
-                    <div class="flex items-center space-x-2 pt-1 pointer-events-none opacity-40">
-                        <span class="text-gray-600 font-mono">├─</span>
-                        <span class="text-gray-400 font-medium">Projeler</span>
-                    </div>
-                </div>
-            </details>
-
-            <div class="pt-10 mb-6">
-                <h2 class="text-lg font-bold text-white mb-2 flex items-center">
-                    <span class="text-emerald-500 mr-2">├─</span> Referans Kaynaklar & Kılavuzlar
-                </h2>
-                <p class="text-xs text-gray-500 font-sans pl-6">Geliştirme yaparken kullanabileceğiniz ders kitapları ve
-                    simülatörler.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="border border-gray-800 rounded-xl bg-[#0F1422] p-5 space-y-4">
-                    <div class="text-xs text-emerald-500 font-mono tracking-wider">// DERS KİTAPLARI & REF</div>
-                    <div class="space-y-2 font-sans text-sm">
-                        <div class="flex items-center space-x-2 py-0.5">
-                            <span class="text-emerald-500 font-mono text-xs">>_</span>
-                            <a href="https://meslek.meb.gov.tr/dmgoster.aspx?kurum_id=1&sinif_kodu=11&alan_id=04"
-                                target="_blank"
-                                class="text-gray-350 hover:text-emerald-400 font-medium transition flex items-center">
-                                Ders Kitapları
-                                <span
-                                    class="ml-2 text-[10px] bg-blue-950 text-blue-400 px-1.5 py-0.5 rounded border border-blue-900/30 font-mono">MEB</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-gray-800 rounded-xl bg-[#0F1422] p-5 space-y-4">
-                    <div class="text-xs text-emerald-500 font-mono tracking-wider">// LAB TOOLS</div>
-                    <div class="space-y-2 font-sans text-sm">
-                        <div class="flex items-center space-x-2 py-0.5">
-                            <span class="text-emerald-500 font-mono text-xs">>_</span>
-                            <a href="https://www.tinkercad.com" target="_blank"
-                                class="text-gray-400 hover:text-emerald-400 transition">Tinkercad Simülatör</a>
-                        </div>
-                        <div class="flex items-center space-x-2 py-0.5">
-                            <span class="text-emerald-500 font-mono text-xs">>_</span>
-                            <a href="https://visualstudio.microsoft.com/tr/" target="_blank"
-                                class="text-gray-400 hover:text-emerald-400 transition">Visual Studio Community</a>
-                        </div>
-                        <div class="flex items-center space-x-2 py-0.5">
-                            <span class="text-emerald-500 font-mono text-xs">>_</span>
-                            <a href="https://www.arduino.cc/en/software" target="_blank"
-                                class="text-gray-400 hover:text-emerald-400 transition">Arduino IDE Download</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    </li>
+                </ul>
+            </section>
         </main>
 
+        <footer>
+            © 2026-2027 Dersler & Repolar
+        </footer>
     </div>
-
-    <footer
-        class="w-full max-w-4xl mx-auto px-6 pb-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-600 mt-auto">
-        <p>2026 | Powered by GitHub Pages</p>
-    </footer>
-
 </body>
-
 </html>
